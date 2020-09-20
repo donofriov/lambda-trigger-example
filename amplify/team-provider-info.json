@@ -10,6 +10,16 @@
       "StackName": "amplify-lambdatriggerexample-dev-100931",
       "StackId": "arn:aws:cloudformation:us-east-1:681724940172:stack/amplify-lambdatriggerexample-dev-100931/9ef143e0-fb18-11ea-85d9-0e3259ee6b3b",
       "AmplifyAppId": "d9htt0tyigxap"
+    },
+    "categories": {
+      "function": {
+        "lambdatriggerexampledb7a08b9PostConfirmation": {
+          "GROUP": "Admin"
+        }
+      },
+      "auth": {
+        "lambdatriggerexampledb7a08b9": {}
+      }
     }
   }
 }

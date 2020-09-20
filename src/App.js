@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import { Auth } from 'aws-amplify'
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+import './App.css'
 
 function App() {
+  const [user, updateUser] = useState(null)
+  useEffect(() => {
+    Auth.currentAuthenticatedUser()
+      .then(user => updateUser(user))
+      .catch(err => console.log(err))
+  }, [])
+  let isAdmin = false
+  if (user) {
+    const { signInUserSession: { idToken: { payload } } } = user
+    console.log('payload:', payload)
+    if (payload['cognito:groups'] && payload['cognito:groups'].includes('Admin')) {
+      isAdmin = true
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+      <h1>Hello World</h1>
+      { isAdmin && <p>Welcome, Admin</p> }
       </header>
+      <AmplifySignOut />
     </div>
-  );
+  )
 }
 
-export default App;
+export default withAuthenticator(App)
